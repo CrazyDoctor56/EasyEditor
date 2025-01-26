@@ -28,6 +28,7 @@ def filter(files: list[str]):
     return filtered_files
         
 def choose_workdir():
+    ui.files_list.clear()
     global workdir
 
     workdir = QFileDialog.getExistingDirectory()
