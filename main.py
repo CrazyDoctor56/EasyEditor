@@ -32,10 +32,11 @@ def choose_workdir():
     global workdir
 
     workdir = QFileDialog.getExistingDirectory()
-    files_list = os.listdir(workdir)
+    if os.path.isdir(workdir):
+        files_list = os.listdir(workdir)
 
-    files_list = filter(files_list)
-    ui.files_list.addItems(files_list)
+        files_list = filter(files_list)
+        ui.files_list.addItems(files_list)
 
 ui.choose_dir_btn.clicked.connect(choose_workdir)
 
@@ -73,39 +74,44 @@ class ImageProcessor():
         self.image.save(full_path)
 
     def makeBW(self):
-        self.image = self.image.convert("L")
-        self.saveImage()
-        modified_path = os.path.join(workdir, self.modified_subfolder, self.filename)
-        self.full_path = modified_path
-        self.showImage()
+        if self.image is not None:
+            self.image = self.image.convert("L")
+            self.saveImage()
+            modified_path = os.path.join(workdir, self.modified_subfolder, self.filename)
+            self.full_path = modified_path
+            self.showImage()
 
     def makeFlip(self):
-        self.image = self.image.transpose(Image.Transpose.FLIP_LEFT_RIGHT)
-        self.saveImage()
-        modified_path = os.path.join(workdir, self.modified_subfolder, self.filename)
-        self.full_path = modified_path
-        self.showImage()
+        if self.image is not None:
+            self.image = self.image.transpose(Image.Transpose.FLIP_LEFT_RIGHT)
+            self.saveImage()
+            modified_path = os.path.join(workdir, self.modified_subfolder, self.filename)
+            self.full_path = modified_path
+            self.showImage()
 
     def makeTurnLeft(self):
-        self.image = self.image.transpose(Image.Transpose.ROTATE_90)
-        self.saveImage()
-        modified_path = os.path.join(workdir, self.modified_subfolder, self.filename)
-        self.full_path = modified_path
-        self.showImage()
+        if self.image is not None:
+            self.image = self.image.transpose(Image.Transpose.ROTATE_90)
+            self.saveImage()
+            modified_path = os.path.join(workdir, self.modified_subfolder, self.filename)
+            self.full_path = modified_path
+            self.showImage()
 
     def makeTurnRight(self):
-        self.image = self.image.transpose(Image.Transpose.ROTATE_270)
-        self.saveImage()
-        modified_path = os.path.join(workdir, self.modified_subfolder, self.filename)
-        self.full_path = modified_path
-        self.showImage()
+        if self.image is not None:
+            self.image = self.image.transpose(Image.Transpose.ROTATE_270)
+            self.saveImage()
+            modified_path = os.path.join(workdir, self.modified_subfolder, self.filename)
+            self.full_path = modified_path
+            self.showImage()
 
     def makeSharpen(self):
-        self.image = self.image.filter(ImageFilter.SHARPEN)
-        self.saveImage()
-        modified_path = os.path.join(workdir, self.modified_subfolder, self.filename)
-        self.full_path = modified_path
-        self.showImage()
+        if self.image is not None:
+            self.image = self.image.filter(ImageFilter.SHARPEN)
+            self.saveImage()
+            modified_path = os.path.join(workdir, self.modified_subfolder, self.filename)
+            self.full_path = modified_path
+            self.showImage()
 
 ip = ImageProcessor()
 
